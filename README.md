@@ -1,50 +1,81 @@
-# React + TypeScript + Vite
+# Arti-Key Web Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Une application web de gestion des congés et absences construite avec React, TypeScript, et Firebase.
 
-Currently, two official plugins are available:
+## Configuration requise
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Node.js (version 16 ou supérieure)
+- npm ou yarn
+- Un compte Firebase
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+1. Clonez le dépôt :
+```bash
+git clone <votre-repo-url>
+cd arti-key-web
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+2. Installez les dépendances :
+```bash
+npm install
+# ou
+yarn install
 ```
+
+3. Configuration de l'environnement :
+   - Copiez le fichier `.env.example` en `.env`
+   - Remplissez les variables d'environnement avec vos informations Firebase
+
+```bash
+cp .env.example .env
+```
+
+## Configuration Firebase
+
+1. Créez un projet sur [Firebase Console](https://console.firebase.google.com)
+2. Activez Authentication, Firestore et Storage
+3. Copiez vos informations de configuration dans le fichier `.env`
+
+## Développement
+
+Pour lancer l'application en mode développement :
+
+```bash
+npm run dev
+# ou
+yarn dev
+```
+
+L'application sera disponible sur `http://localhost:5173`
+
+## Structure du projet
+
+```
+src/
+  ├── components/      # Composants réutilisables
+  ├── config/         # Configuration (Firebase, etc.)
+  ├── contexts/       # Contextes React
+  ├── hooks/          # Hooks personnalisés
+  ├── pages/          # Pages de l'application
+  ├── theme/          # Configuration du thème
+  └── types/          # Types TypeScript
+```
+
+## Fonctionnalités
+
+- Authentification utilisateur
+- Gestion des demandes de congés
+- Workflow d'approbation
+- Tableau de bord avec statistiques
+- Gestion des documents
+- Notifications
+
+## Technologies utilisées
+
+- React + TypeScript
+- Vite
+- Firebase (Auth, Firestore, Storage)
+- Material-UI
+- React Router
+- React Query
