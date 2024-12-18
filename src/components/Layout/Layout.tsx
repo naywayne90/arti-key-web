@@ -13,17 +13,18 @@ import {
   Toolbar,
   Typography,
   useTheme,
+  alpha,
 } from '@mui/material';
 import {
   Menu as MenuIcon,
   Dashboard,
   People,
-  EventNote,
-  BusinessCenter,
+  EventAvailable,
+  WorkspacePremium,
   DirectionsCar,
   School,
   Assessment,
-  Folder,
+  FolderSpecial,
   AccessTime,
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -37,12 +38,12 @@ interface LayoutProps {
 const menuItems = [
   { text: 'Tableau de Bord', icon: <Dashboard />, path: '/' },
   { text: 'Employés', icon: <People />, path: '/employes' },
-  { text: 'Congés et Absences', icon: <EventNote />, path: '/conges' },
-  { text: 'Gestion des Carrières', icon: <BusinessCenter />, path: '/carrieres' },
+  { text: 'Congés et Absences', icon: <EventAvailable />, path: '/conges' },
+  { text: 'Gestion des Carrières', icon: <WorkspacePremium />, path: '/carrieres' },
   { text: 'Parc Auto', icon: <DirectionsCar />, path: '/parc-auto' },
   { text: 'Formations', icon: <School />, path: '/formations' },
   { text: 'Performances', icon: <Assessment />, path: '/performances' },
-  { text: 'Gestion des Dossiers Administratifs', icon: <Folder />, path: '/dossiers' },
+  { text: 'Gestion des Dossiers Administratifs', icon: <FolderSpecial />, path: '/dossiers' },
   { text: 'Pointage', icon: <AccessTime />, path: '/pointage' },
 ];
 
@@ -62,29 +63,33 @@ export default function Layout({ children }: LayoutProps) {
         overflow: 'auto',
         height: '100%',
         backgroundColor: theme.palette.background.default,
+        borderRight: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
       }}
     >
       <Toolbar
         sx={{
           display: 'flex',
           alignItems: 'center',
-          padding: theme.spacing(0, 2),
+          padding: theme.spacing(0, 3),
           ...theme.mixins.toolbar,
           justifyContent: 'center',
-          borderBottom: `1px solid ${theme.palette.divider}`,
+          borderBottom: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
           minHeight: '80px !important',
+          background: `linear-gradient(45deg, ${alpha(theme.palette.primary.main, 0.02)}, ${alpha(theme.palette.secondary.main, 0.02)})`,
         }}
       >
         <Typography 
           variant="h6" 
           component="div"
           sx={{
-            fontWeight: 600,
+            fontWeight: 700,
+            fontSize: '1.5rem',
             background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
             backgroundClip: 'text',
             WebkitBackgroundClip: 'text',
             color: 'transparent',
             textAlign: 'center',
+            letterSpacing: '-0.5px',
           }}
         >
           Arti Key RH
@@ -97,7 +102,7 @@ export default function Layout({ children }: LayoutProps) {
             <ListItem 
               key={item.text} 
               disablePadding 
-              sx={{ mb: 0.5 }}
+              sx={{ mb: 1 }}
             >
               <ListItemButton
                 selected={isActive}
@@ -108,35 +113,42 @@ export default function Layout({ children }: LayoutProps) {
                 sx={{
                   borderRadius: 2,
                   position: 'relative',
-                  transition: 'all 0.2s ease-in-out',
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  py: 1.5,
                   '&.Mui-selected': {
-                    backgroundColor: `${theme.palette.primary.main}15`,
+                    backgroundColor: alpha(theme.palette.primary.main, 0.08),
+                    backdropFilter: 'blur(4px)',
                     '&:hover': {
-                      backgroundColor: `${theme.palette.primary.main}25`,
+                      backgroundColor: alpha(theme.palette.primary.main, 0.12),
                     },
                     '&::before': {
                       content: '""',
                       position: 'absolute',
                       left: 0,
-                      top: 4,
-                      bottom: 4,
+                      top: 8,
+                      bottom: 8,
                       width: 4,
                       borderRadius: '0 4px 4px 0',
                       backgroundColor: theme.palette.primary.main,
+                      boxShadow: `0 0 12px ${alpha(theme.palette.primary.main, 0.5)}`,
                     },
                   },
                   '&:hover': {
-                    backgroundColor: `${theme.palette.primary.main}10`,
+                    backgroundColor: alpha(theme.palette.primary.main, 0.05),
+                    '& .MuiListItemIcon-root svg': {
+                      transform: 'scale(1.1) rotate(5deg)',
+                    },
                   },
                 }}
               >
                 <ListItemIcon 
                   sx={{ 
-                    color: isActive ? theme.palette.primary.main : theme.palette.text.secondary,
+                    color: isActive ? theme.palette.primary.main : alpha(theme.palette.text.primary, 0.6),
                     minWidth: 40,
+                    ml: 1,
                     '& svg': {
                       fontSize: 24,
-                      transition: 'transform 0.2s ease-in-out',
+                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                       transform: isActive ? 'scale(1.2)' : 'scale(1)',
                     }
                   }}
@@ -146,9 +158,12 @@ export default function Layout({ children }: LayoutProps) {
                 <ListItemText 
                   primary={item.text}
                   sx={{
+                    ml: 1,
                     '& .MuiTypography-root': {
-                      fontWeight: isActive ? 600 : 400,
-                      color: isActive ? theme.palette.text.primary : theme.palette.text.secondary,
+                      fontWeight: isActive ? 600 : 500,
+                      fontSize: '0.95rem',
+                      color: isActive ? theme.palette.text.primary : alpha(theme.palette.text.primary, 0.7),
+                      transition: 'all 0.3s ease',
                     }
                   }}
                 />
@@ -171,7 +186,8 @@ export default function Layout({ children }: LayoutProps) {
           bgcolor: 'background.paper',
           color: 'text.primary',
           boxShadow: 'none',
-          borderBottom: `1px solid ${theme.palette.divider}`,
+          borderBottom: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+          backdropFilter: 'blur(8px)',
         }}
       >
         <Toolbar>
@@ -199,9 +215,10 @@ export default function Layout({ children }: LayoutProps) {
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { 
-              boxSizing: 'border-box', 
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
               width: drawerWidth,
+              borderRight: 'none',
               boxShadow: theme.shadows[8],
             },
           }}
@@ -212,12 +229,11 @@ export default function Layout({ children }: LayoutProps) {
           variant="permanent"
           sx={{
             display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { 
-              boxSizing: 'border-box', 
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
               width: drawerWidth,
-              boxShadow: 'none',
-              border: 'none',
-              borderRight: `1px solid ${theme.palette.divider}`,
+              borderRight: 'none',
+              boxShadow: `4px 0 8px ${alpha(theme.palette.common.black, 0.05)}`,
             },
           }}
           open
@@ -231,8 +247,8 @@ export default function Layout({ children }: LayoutProps) {
           flexGrow: 1,
           p: 3,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
-          backgroundColor: theme.palette.background.default,
           minHeight: '100vh',
+          backgroundColor: alpha(theme.palette.background.default, 0.8),
         }}
       >
         <Toolbar />
